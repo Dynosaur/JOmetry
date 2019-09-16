@@ -1,3 +1,6 @@
+import symbol.constant.FloatingPoint;
+import symbol.constant.Integer;
+
 public class JOmetry {
 
     static class Operator {
@@ -37,7 +40,7 @@ public class JOmetry {
 
     static Type determine(String input) throws ForeignSymbolException {
         try {
-            Integer.parseInt(input);
+            java.lang.Integer.parseInt(input);
             return Type.INTEGER;
         } catch(NumberFormatException notInt) {
             try {
@@ -67,6 +70,9 @@ public class JOmetry {
     public static void main(String[] args) {
         System.out.println(Term.isTerm("x5 - 2"));
         System.out.println(Term.isTerm("x5 + -2"));
+        Token.parse("x5 - 2");
+        FloatingPoint f = new FloatingPoint(2.215);
+        System.out.println(f.toWordString());
     }
 
 }
