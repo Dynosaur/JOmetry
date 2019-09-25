@@ -1,20 +1,34 @@
 package symbol.constant;
 
+import symbol.Symbol;
+
 /**
- * @author Alejandro Doberenz
- * @version 9.14.2019
+ * @author  Alejandro Doberenz
+ * @version 1.1.5
+ * @since   9/14/2019
  *
+ * Represents a mathematical number.
  */
 public abstract class Constant extends symbol.Symbol {
 
-    /*
-        TODO
-            - Finish toWordString
-                - Decimal formatting
-            - Start on toCommaString
-     */
+    public static boolean isConstant(Object obj) {
+        if(obj instanceof Constant) return true;
+        else if(obj instanceof Number) return true;
+        else if(obj instanceof String || obj instanceof Character || obj instanceof Symbol) {
+            if(obj instanceof Character) obj = String.valueOf(obj);
+            if(obj instanceof Symbol) obj = ((Symbol) obj).getSymbol();
+            try {
+                Double.parseDouble((String) obj);
+                return true;
+            } catch(NumberFormatException e) {
+                return false;
+            }
+        } else return false;
+    }
 
     Number constantValue;
+
+
 
     public Constant(Number number) {
         super(String.valueOf(number));
@@ -99,9 +113,8 @@ public abstract class Constant extends symbol.Symbol {
         System.out.println(value);
     }
 
-    public static void main(String[] args) {
-
-        System.out.println(Double.toHexString(10));
+    @Override public String toString() {
+        return toWordString();
     }
 
     public String toWordString() {
