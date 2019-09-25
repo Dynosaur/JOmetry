@@ -1,0 +1,15 @@
+
+equation
+old
+old.combo
+old.token
+old.token.composite
+old.token.unary
+old.util
+rsrc
+symbol
+symbol.constant
+symbol.operator
+symbol.variable
+token
+util
