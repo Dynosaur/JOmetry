@@ -5,11 +5,11 @@ import static symbol.operator.Operator.isOperator;
 import static symbol.variable.Variable.isVariable;
 
 /**
- * @author  Alejandro Doberenz
- * @version 1.1.1
- * @since   9/14/2019
+ * The {@code Symbol} class represents a mathematical symbol, such as a number or variable.
  *
- * Represents a mathematical symbol, such as a number or variable.
+ * @author  Alejandro Doberenz
+ * @version 1.2
+ * @since   9/14/2019
  */
 public class Symbol {
 
@@ -38,5 +38,7 @@ public class Symbol {
             return getSymbol().equals(symbol.getSymbol());
         } else return false;
     }
+
+    @Override public String toString() { return getSymbol(); }
 
 }
