@@ -1,11 +1,11 @@
 package symbol.constant;
 
 /**
+ * Represents a decimal mathematical number.
+ *
  * @author  Alejandro Doberenz
  * @version 1.1
  * @since   9/14/2019
- *
- * Represents a decimal mathematical number.
  */
 public class FloatingPoint extends Constant {
 

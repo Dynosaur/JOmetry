@@ -3,11 +3,11 @@ package symbol.constant;
 import static java.lang.Integer.parseInt;
 
 /**
+ * Represents a mathematical integer (Whole number).
+ *
  * @author  Alejandro Doberenz
  * @version 1.1
  * @since   9/14/2019
- *
- * Represents a mathematical integer (Whole number).
  */
 public class Integer extends Constant {
 
