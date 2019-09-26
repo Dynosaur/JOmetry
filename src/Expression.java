@@ -1,9 +1,10 @@
 /**
- * @author Alejandro Doberenz
- * @version 9/12/2019
- *
- * An Expression represents a mathematical expression, or a sequence of numbers, variables, and/or operators, such as
+ * An Expression represents a mathematical expression, or a sequence of numbers, variables, and/or OPERATORS, such as
  * x + 5, or (2x + 4)(x + 3), but do not contain a equals sign. Expressions can be simplified but cannot be solved.
+ *
+ * @author  Alejandro Doberenz
+ * @since   9/12/2019
+ * @version 0.1
  */
 public class Expression {
 
