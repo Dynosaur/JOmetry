@@ -7,9 +7,9 @@ import static symbol.constant.Constant.isConstant;
 import static rsrc.Resources.LEGAL_TEXT_LIST;
 
 /**
- * The {@code NumberAggregator} class contains the {@code aggregateNumbers} method which, when given a {@code String}, will
- * return a {@code String ArrayList} with variables, operators, and numbers separated from each other. The main function
- * of the {@code NumberAggregator} is to combine numbers and decimals together.
+ * The {@code NumberAggregator} class contains the {@code aggregateNumbers} method which, when given a {@code String},
+ * will return a {@code String ArrayList} with variables, operators, and numbers separated from each other. The main
+ * function of the {@code NumberAggregator} is to combine numbers and decimals together.
  * @author  Alejandro Doberenz
  * @version 1.0
  * @since   9/22/2019
