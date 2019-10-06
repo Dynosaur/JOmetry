@@ -6,7 +6,7 @@ import symbol.Symbol;
  * The {@code Constant} class represents a mathematical number.
  *
  * @author  Alejandro Doberenz
- * @version 1.1.5
+ * @version 1.1.4
  * @since   9/14/2019
  */
 public abstract class Constant extends symbol.Symbol {

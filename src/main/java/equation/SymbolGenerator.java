@@ -15,4 +15,8 @@ public class SymbolGenerator {
         return symbols;
     }
 
+    public static ArrayList<Symbol> generateSymbols(String statement) {
+        return generateSymbols(NumberParser.aggregateNumbers(statement));
+    }
+
 }

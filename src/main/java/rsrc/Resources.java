@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class Resources {
 
-    private interface ReaderRunnable {
+    public interface ReaderRunnable {
 
         void run(int readData);
 
@@ -32,11 +32,11 @@ public class Resources {
      */
     public static void loadResources() {
         if(hasLoadedResources) return;
-        loadGenericFile("resources/alphabet", ALPHABET_LIST);
-        loadGenericFile("resources/legal_text", LEGAL_TEXT_LIST);
+        loadGenericFile("src/main/resources/alphabet", ALPHABET_LIST);
+        loadGenericFile("src/main/resources/legal_text", LEGAL_TEXT_LIST);
     }
 
-    private static void loadFile(File targetFile, ReaderRunnable action) {
+    public static void loadFile(File targetFile, ReaderRunnable action) {
         try {
             FileReader reader = new FileReader(targetFile);
             try {
@@ -44,16 +44,16 @@ public class Resources {
                     action.run(reader.read());
                 try {
                     reader.close();
-                } catch(IOException e) { e.printStackTrace(); }
-            } catch(IOException e) { e.printStackTrace(); }
-        } catch(FileNotFoundException e) { e.printStackTrace(); }
+                } catch(IOException e) { e.printStackTrace(); System.exit(1); }
+            } catch(IOException e) { e.printStackTrace(); System.exit(1); }
+        } catch(FileNotFoundException e) { e.printStackTrace(); System.exit(1); }
     }
 
-    private static void loadFile(String targetPath, ReaderRunnable action) {
+    public static void loadFile(String targetPath, ReaderRunnable action) {
         loadFile(new File(targetPath), action);
     }
 
-    private static void loadGenericFile(String path, ArrayList<Character> characterArray) {
+    public static void loadGenericFile(String path, ArrayList<Character> characterArray) {
         ReaderRunnable action = readData -> {
             if(Character.isWhitespace(readData)) return;
             characterArray.add((char) readData);

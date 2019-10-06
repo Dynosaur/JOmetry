@@ -9,11 +9,13 @@ package symbol.operator;
  */
 public class Operator extends symbol.Symbol {
 
-    public static Operator ADD = new Operator("+");
-    public static Operator SUBTRACT = new Operator("-");
-    public static Operator MULTIPLY = new Operator("*");
-    public static Operator DIVIDE = new Operator("/");
-    public static Operator EQUALS = new Operator("=");
+    private String stringText;
+
+    public static Operator ADD = new Operator("+", "plus");
+    public static Operator SUBTRACT = new Operator("-", "minus");
+    public static Operator MULTIPLY = new Operator("*", "multiplied by");
+    public static Operator DIVIDE = new Operator("/", "divided by");
+    public static Operator EQUALS = new Operator("=", "equals");
 
     public final static Operator[] OPERATORS = {ADD, SUBTRACT, MULTIPLY, DIVIDE, EQUALS};
 
@@ -41,8 +43,13 @@ public class Operator extends symbol.Symbol {
         } else throw new IllegalArgumentException("Could not create Operator: obj is not a String or Character.");
     }
 
-    private Operator(String symbol) {
+    private Operator(String symbol, String text) {
         super(symbol);
+        stringText = text;
+    }
+
+    @Override public String toString() {
+        return stringText;
     }
 
 }
