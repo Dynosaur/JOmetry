@@ -16,7 +16,7 @@ public class ResourcesTests {
         Character[] a = {'0', '1', '2', '3', '4', '5'};
         ArrayList<Character> expected = new ArrayList<>(asList(a));
 
-        String path = "E:\\java\\jOmetry\\src\\test\\resources\\test0";
+        String path = "src\\test\\resources\\test0";
         ArrayList<Character> actual = new ArrayList<>(0);
         ReaderRunnable action = readData -> actual.add((char) readData);
 
@@ -32,7 +32,7 @@ public class ResourcesTests {
         Character[] a = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
         ArrayList<Character> expected = new ArrayList<>(asList(a));
 
-        String path = "E:\\java\\jOmetry\\src\\test\\resources\\test1";
+        String path = "src\\test\\resources\\test1";
         ArrayList<Character> actual = new ArrayList<>(0);
         ReaderRunnable action = readData -> actual.add((char) readData);
 
@@ -48,7 +48,7 @@ public class ResourcesTests {
         Character[] a = {'H', 'e', 'l', 'l', 'o', ',', ' ', 'W', 'o', 'r', 'l', 'd', '!'};
         ArrayList<Character> expected = new ArrayList<>(asList(a));
 
-        String path = "E:\\java\\jOmetry\\src\\test\\resources\\test2";
+        String path = "src\\test\\resources\\test2";
         ArrayList<Character> actual = new ArrayList<>(0);
         ReaderRunnable action = readData -> actual.add((char) readData);
 
@@ -64,7 +64,7 @@ public class ResourcesTests {
         Character[] a = {'a', ' ', 'b', ' ', 'c', ' ', 'd', ' ', 'e', ' ', 'f', ' ', 'g', '\r', '\n', 'a', ' ', 'b', ' ', 'c', ' ', 'd', ' ', 'e', ' ', 'f', ' ', 'g', '\r', '\n', '\t', 'a', ' ', 'b', ' ', 'c', ' ', 'd', ' ', 'e', ' ', 'f', ' ', 'g'};
         ArrayList<Character> expected = new ArrayList<>(asList(a));
 
-        String path = "E:\\java\\jOmetry\\src\\test\\resources\\test3";
+        String path = "src\\test\\resources\\test3";
         ArrayList<Character> actual = new ArrayList<>(0);
         ReaderRunnable action = readData -> actual.add((char) readData);
 
@@ -80,7 +80,7 @@ public class ResourcesTests {
         Character[] a = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'a', 'b', 'c', 'd', 'e', 'f', 'g'};
         ArrayList<Character> expected = new ArrayList<>(asList(a));
 
-        String path = "E:\\java\\jOmetry\\src\\test\\resources\\test3";
+        String path = "src\\test\\resources\\test3";
         ArrayList<Character> actual = new ArrayList<>(0);
 
         // Act
