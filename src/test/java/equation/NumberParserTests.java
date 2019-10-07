@@ -1,14 +1,25 @@
+package equation;
+
 import java.util.ArrayList;
 import equation.NumberParser.AggregateType;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static java.util.Arrays.asList;
 import static equation.NumberParser.AggregateType.*;
 
+/**
+ * This class contains test methods for the {@link equation.NumberParser} class.
+ *
+ * @author  Alejandro Doberenz
+ * @since   10/6/2019
+ * @version 1.0
+ */
 public class NumberParserTests {
 
-    static {
+    @BeforeMethod
+    public void setUp() {
         rsrc.Resources.loadResources();
     }
 
@@ -24,7 +35,8 @@ public class NumberParserTests {
         }
     }
 
-    @Test public void test_determineAggregateType_LegalText() {
+    @Test
+    public void test_determineAggregateType_LegalText() {
         testDetermineAggregateType('a', LEGAL_TEXT);
         testDetermineAggregateType("b", LEGAL_TEXT);
         testDetermineAggregateType('x', LEGAL_TEXT);
@@ -37,7 +49,8 @@ public class NumberParserTests {
         testDetermineAggregateType('^', LEGAL_TEXT);
     }
 
-    @Test public void test_determineAggregateType_IllegalText() {
+    @Test
+    public void test_determineAggregateType_IllegalText() {
         testDetermineAggregateType('`', ILLEGAL_TEXT);
         testDetermineAggregateType('~', ILLEGAL_TEXT);
         testDetermineAggregateType('@', ILLEGAL_TEXT);
@@ -48,14 +61,16 @@ public class NumberParserTests {
         testDetermineAggregateType(':', ILLEGAL_TEXT);
     }
 
-    @Test public void test_determineAggregateType_Whitespace() {
+    @Test
+    public void test_determineAggregateType_Whitespace() {
         testDetermineAggregateType(' ', WHITE_SPACE);
         testDetermineAggregateType('\n', WHITE_SPACE);
         testDetermineAggregateType('\r', WHITE_SPACE);
         testDetermineAggregateType('\t', WHITE_SPACE);
     }
 
-    @Test public void test_determineAggregateType_Number() {
+    @Test
+    public void test_determineAggregateType_Number() {
         testDetermineAggregateType(1, NUMBER);
         testDetermineAggregateType(-1, NUMBER);
         testDetermineAggregateType(0.0625, NUMBER);
@@ -65,7 +80,8 @@ public class NumberParserTests {
         testDetermineAggregateType('0', NUMBER);
     }
 
-    @Test public void test_determineAggregateType_DecimalPoint() {
+    @Test
+    public void test_determineAggregateType_DecimalPoint() {
         testDetermineAggregateType('.', DECIMAL_POINT);
         testDetermineAggregateType(".", DECIMAL_POINT);
     }
