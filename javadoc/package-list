@@ -1,6 +1,8 @@
 
 equation
+equation.test
 rsrc
+rsrc.test
 symbol
 symbol.constant
 symbol.operator
