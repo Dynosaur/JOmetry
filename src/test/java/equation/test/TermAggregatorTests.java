@@ -1,4 +1,4 @@
-package equation;
+package equation.test;
 
 import equation.TermAggregator.SymbolType;
 import symbol.Symbol;

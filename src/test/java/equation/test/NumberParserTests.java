@@ -1,4 +1,4 @@
-package equation;
+package equation.test;
 
 import java.util.ArrayList;
 import equation.NumberParser.AggregateType;
