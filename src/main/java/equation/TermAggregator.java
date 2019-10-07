@@ -12,17 +12,13 @@ import static equation.SymbolGenerator.generateSymbols;
 
 public class TermAggregator {
 
-    enum SymbolType {
+    public enum SymbolType {
         CONSTANT,
         OPERATOR,
         VARIABLE,
     }
 
-    class TermBuilder {
-
-    }
-
-    private static SymbolType determineSymbolType(Symbol symbol) {
+    public static SymbolType determineSymbolType(Symbol symbol) {
         if(symbol instanceof Constant) return CONSTANT;
         if(symbol instanceof Operator) return OPERATOR;
         if(symbol instanceof Variable) return VARIABLE;

@@ -13,8 +13,8 @@ import static rsrc.Resources.LEGAL_TEXT_LIST;
  * {@code String} a subclass of {@link symbol.Symbol}. This class does not require resource
  *
  * @author  Alejandro Doberenz
- * @version 1.0.3
  * @since   9/22/2019
+ * @version 1.1
  */
 public final class NumberParser {
 
