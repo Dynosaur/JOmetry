@@ -61,7 +61,7 @@ public class ResourcesTests {
 
     @Test public void test_loadFile_test3() {
         // Assert
-        Character[] a = {'a', ' ', 'b', ' ', 'c', ' ', 'd', ' ', 'e', ' ', 'f', ' ', 'g', '\n', 'a', ' ', 'b', ' ', 'c', ' ', 'd', ' ', 'e', ' ', 'f', ' ', 'g', '\n', '\t', 'a', ' ', 'b', ' ', 'c', ' ', 'd', ' ', 'e', ' ', 'f', ' ', 'g'};
+        Character[] a = {'a', ' ', 'b', ' ', 'c', ' ', 'd', ' ', 'e', ' ', 'f', ' ', 'g', '\r', '\n', 'a', ' ', 'b', ' ', 'c', ' ', 'd', ' ', 'e', ' ', 'f', ' ', 'g', '\r', '\n', '\t', 'a', ' ', 'b', ' ', 'c', ' ', 'd', ' ', 'e', ' ', 'f', ' ', 'g'};
         ArrayList<Character> expected = new ArrayList<>(asList(a));
 
         String path = "src\\test\\resources\\test3";
