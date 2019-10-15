@@ -3,8 +3,11 @@ package equation.test;
 import java.util.ArrayList;
 import equation.NumberParser.AggregateType;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import util.TestLogger;
 
 import static java.util.Arrays.asList;
 import static equation.NumberParser.AggregateType.*;
@@ -18,9 +21,23 @@ import static equation.NumberParser.AggregateType.*;
  */
 public class NumberParserTests {
 
-    @BeforeMethod
+    TestLogger logger;
+
+    @BeforeClass
     public void setUp() {
+        logger = new TestLogger("src\\test\\resources\\logs\\NumberParserTests\\");
+        logger.writeLine(new java.util.Date().toString());
+        logger.writeLine("NumberParserTests");
+        logger.writeLine("=========================");
+        logger.writeLine("Loading resources...");
         rsrc.Resources.loadResources();
+        logger.writeLine("Complete.");
+    }
+
+    @AfterClass
+    public void cleanUp() {
+        logger.writeLine("Closing logger...");
+        logger.finish();
     }
 
     public void testDetermineAggregateType(Object input, AggregateType expected) {
