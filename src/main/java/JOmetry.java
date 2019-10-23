@@ -12,7 +12,7 @@ public class JOmetry {
 
     public static void main(String[] args) {
         rsrc.Resources.loadResources();
-        System.out.println(generateSymbols(aggregateNumbers("y = mx + b")));
+        System.out.println(generateSymbols(aggregateNumbers("y = 4x + 10b")));
     }
 
 }

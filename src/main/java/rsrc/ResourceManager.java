@@ -59,11 +59,14 @@ public class ResourceManager {
     }
 
     public static void purgeConfigurations() {
-        System.out.println("\n     ====================");
+        System.out.println("\n\t=======================");
+        System.out.println("\t\t\tPURGING ");
         System.out.println("Purging configuration and log files...");
         printDelete(configFile);
         printDelete(mainLogDirectory);
         printDelete(testLogDirectory);
+        System.out.println("Done.");
+        System.out.println("\n\t=======================");
     }
 
     private static void printDelete(File fileToDelete) {
