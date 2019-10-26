@@ -3,3 +3,4 @@ out
 target
 *.iml
 src/test/resources/logs
+jOmetry.config
