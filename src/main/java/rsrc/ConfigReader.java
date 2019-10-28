@@ -9,7 +9,7 @@ public class ConfigReader {
 
     private File configFile;
 
-    private ArrayList<String> fileLines = new ArrayList<>();
+    private ArrayList<String> rawCharacters = new ArrayList<>();
 
     public ConfigReader(File file) {
         if(!file.exists())
@@ -18,23 +18,20 @@ public class ConfigReader {
     }
 
     void read() {
-        int lineNumber = 0;
         try {
             Scanner scanner = new Scanner(configFile).useDelimiter("");
             while(scanner.hasNext()) {
                 String input = scanner.next();
                 if(input.equals("\n"))
-                    System.out.println("\"Newline character\"");
-                else
-                    if(input.equals("\r"))
-                        System.out.println("\"Carriage return character\"");
-                    else
-                        if(input.equals("\t"))
-                            System.out.println("\"Tab character\"");
-                        else
-                            System.out.println("\"" + input + "\"");
+                    rawCharacters.add("\"Newline character\"");
+                else if(input.equals("\r"))
+                    rawCharacters.add("\"Return carriage character\"");
+                else if(input.equals("\t"))
+                    rawCharacters.add("\"Tab character\"");
+                else rawCharacters.add("\"" + input + "\"");
             }
             scanner.close();
+            System.out.println(rawCharacters);
         } catch(FileNotFoundException e) {
             e.printStackTrace();
             System.err.println("This is an unexpected exception; the config file should exist when the ConfigReader is created.");
