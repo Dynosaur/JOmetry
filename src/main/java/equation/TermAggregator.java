@@ -36,9 +36,4 @@ public class TermAggregator {
         }
     }
 
-    public static void main(String[] args) {
-        rsrc.Resources.loadResources();
-        aggregateTerms("y = mx + 10");
-    }
-
 }
