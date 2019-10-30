@@ -11,19 +11,19 @@ import java.util.Scanner;
  *
  * @author  Alejandro Doberenz
  * @since   10/17/2019
- * @version 0.25
+ * @version 0.3
  */
 public class ResourceManager {
 
     // <editor-fold desc="Variables">
     private static boolean isFirstTime = true;
 
-    private static final String MAIN_LOGS_PATH = "src\\main\\resources\\logs";
-    private static final String TEST_LOGS_PATH = "src\\test\\resources\\logs";
-
     private static File configFile = new File("jOmetry.config");
-    private static File mainLogDirectory = new File(MAIN_LOGS_PATH);
-    private static File testLogDirectory = new File(TEST_LOGS_PATH);
+    private static File mainLogDirectory = new File("src\\main\\resources\\logs");
+    private static File testLogDirectory = new File("src\\test\\resources\\logs");
+
+    public static String ALPHABET_STRING = null;
+    public static String LEGAL_TEXT_STRING = null;
     // </editor-fold>
 
     public static void start() {
@@ -37,8 +37,16 @@ public class ResourceManager {
             createConfigurations(true);
 
         System.out.println("Loading configurations...");
-        ConfigReader reader = new ConfigReader(configFile);
-        reader.read();
+        try {
+            ConfigurationFile configFile = new ConfigurationFile("jOmetry.config");
+            ALPHABET_STRING = configFile.getConfiguration("Alphabet");
+            LEGAL_TEXT_STRING = configFile.getConfiguration("Legal Text");
+            System.out.println("Done.");
+        } catch(Exception e) {
+            System.err.println("An error has occurred, it is recommended to wipe the configuration files.");
+            clean();
+            System.exit(1);
+        }
     }
 
     public static void createConfigurations(boolean verbose) {
@@ -58,10 +66,10 @@ public class ResourceManager {
         System.out.println("Writing default configurations...");
         try {
             PrintWriter out = new PrintWriter(configFile);
-            out.println("# Alphabet");
+            out.println("Alphabet:");
             out.println("\tABCDEFGHIJKLMNOPQRSTUVWXYZ\n\tabcdefghijklmnopqrstuvwxyz");
-            out.println("# Legal Text");
-            out.println("\t$Alphabet");
+            out.println("Legal Text:");
+            out.println("\t\\Alphabet\\");
             out.println("\t+-*/=[]{}()");
             out.close();
         } catch(Exception e) {
@@ -133,11 +141,6 @@ public class ResourceManager {
                 return;
             }
         }
-    }
-
-    public static void main(String[] args) {
-        start();
-        clean();
     }
 
 }
