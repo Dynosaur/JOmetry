@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import static equation.NumberParser.AggregateType.*;
 import static symbol.constant.Constant.isConstant;
-import static rsrc.Resources.LEGAL_TEXT_LIST;
+import static rsrc.ResourceManager.LEGAL_TEXT_STRING;
 
 /**
  * The {@code NumberParser} class's purpose is to merge numbers and decimal points within a {@code String}, and
@@ -61,7 +61,7 @@ public final class NumberParser {
                 if(((String) obj).length() != 1) return ILLEGAL_TEXT;
                 else obj = ((String) obj).toCharArray()[0];
             }
-            if(LEGAL_TEXT_LIST.contains(obj)) return LEGAL_TEXT;
+            if(LEGAL_TEXT_STRING.contains(String.valueOf(obj))) return LEGAL_TEXT;
             else if(Character.isWhitespace((char) obj)) return WHITE_SPACE;
             else return ILLEGAL_TEXT;
         } throw new IllegalArgumentException(obj + " could not be assigned an AggregateType.");
