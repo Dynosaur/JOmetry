@@ -13,7 +13,7 @@ import static equation.TermAggregator.SymbolType.*;
 public class TermAggregatorTests {
 
     @BeforeMethod public void setUp() {
-        rsrc.Resources.loadResources();
+        rsrc.ResourceManager.start();
     }
 
     public void testDetermineSymbolType(Symbol input, SymbolType expected) {

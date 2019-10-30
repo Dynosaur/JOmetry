@@ -30,7 +30,7 @@ public class NumberParserTests {
         logger.writeLine("NumberParserTests");
         logger.writeLine("=========================");
         logger.writeLine("Loading resources...");
-        rsrc.Resources.loadResources();
+        rsrc.ResourceManager.start();
         logger.writeLine("Complete.");
     }
 
