@@ -67,7 +67,8 @@ public class ResourceManager {
         try {
             PrintWriter out = new PrintWriter(configFile);
             out.println("Alphabet:");
-            out.println("\tABCDEFGHIJKLMNOPQRSTUVWXYZ\n\tabcdefghijklmnopqrstuvwxyz");
+            out.println("\tABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            out.println("\tabcdefghijklmnopqrstuvwxyz");
             out.println("Legal Text:");
             out.println("\t\\Alphabet\\");
             out.println("\t+-*/=[]{}()");
