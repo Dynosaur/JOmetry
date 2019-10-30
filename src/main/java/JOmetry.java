@@ -1,3 +1,5 @@
+import rsrc.ResourceManager;
+
 import static equation.NumberParser.aggregateNumbers;
 import static equation.SymbolGenerator.generateSymbols;
 
@@ -11,8 +13,8 @@ import static equation.SymbolGenerator.generateSymbols;
 public class JOmetry {
 
     public static void main(String[] args) {
-        rsrc.Resources.loadResources();
-        System.out.println(generateSymbols(aggregateNumbers("y = mx + b")));
+        ResourceManager.start();
+        System.out.println(generateSymbols(aggregateNumbers("y = mx + 10")));
     }
 
 }
