@@ -1,6 +1,7 @@
 package rsrc;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -21,12 +22,37 @@ public class ResourceManager {
     private static File configFile = new File("jOmetry.config");
     private static File mainLogDirectory = new File("src\\main\\resources\\logs");
     private static File testLogDirectory = new File("src\\test\\resources\\logs");
+    private static File logFile = new File(String.format("src\\main\\resources\\logs\\%s.log", getDate()));
 
     public static String ALPHABET_STRING = null;
+    public static String NUMBERS_STRING = null;
     public static String LEGAL_TEXT_STRING = null;
     // </editor-fold>
 
+    public static String getDate() {
+        return new java.util.Date().toString().replace(" ", "_").replace(":", ".");
+    }
+
     public static void start() {
+        if(logFile.exists())
+            throw new IllegalArgumentException(String.format("\'%s\' log file already exists!", logFile.getPath()));
+        else {
+            try {
+                logFile.createNewFile();
+                try {
+                    LogWriter out = new LogWriter(logFile);
+                    out.timestamp(0, logFile.getPath() + " created.");
+                    out.timestamp(0, "ResourceManager");
+                    out.close();
+                } catch(IOException e) {
+                    System.err.println("An exception occurred during file writing.");
+                }
+            } catch(IOException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+        }
+
         isFirstTime = !(
                 configFile.exists()
                 && mainLogDirectory.exists()
@@ -37,16 +63,30 @@ public class ResourceManager {
             createConfigurations(true);
 
         System.out.println("Loading configurations...");
+
         try {
             ConfigurationFile configFile = new ConfigurationFile("jOmetry.config");
-            ALPHABET_STRING = configFile.getConfiguration("Alphabet");
-            LEGAL_TEXT_STRING = configFile.getConfiguration("Legal Text");
-            System.out.println("Done.");
-        } catch(Exception e) {
-            System.err.println("An error has occurred, it is recommended to wipe the configuration files.");
-            clean();
-            System.exit(1);
+            LogWriter out = new LogWriter(logFile);
+            out.timestamp(0, "ResourceManager");
+            out.timestamp(1, "Loading configurations...");
+            out.timestamp(1, "Loading Alphabet...");
+            String alphabetPayload = configFile.getConfiguration("Alphabet");
+            out.timestamp(1, alphabetPayload);
+            ALPHABET_STRING = alphabetPayload;
+            out.timestamp(1, "Loading Numbers...");
+            String numberPayload = configFile.getConfiguration("Numbers");
+            out.timestamp(1, numberPayload);
+            NUMBERS_STRING = numberPayload;
+            out.timestamp(1, "Loading Legal Text...");
+            String validPayload = configFile.getConfiguration("Legal Text");
+            out.timestamp(1, validPayload);
+            LEGAL_TEXT_STRING = validPayload;
+            out.timestamp(1, "Done.");
+            out.close();
+        } catch(IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     public static void createConfigurations(boolean verbose) {
