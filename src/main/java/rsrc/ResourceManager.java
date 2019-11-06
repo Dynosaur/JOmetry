@@ -12,7 +12,7 @@ import java.util.Scanner;
  *
  * @author  Alejandro Doberenz
  * @since   10/17/2019
- * @version 0.3
+ * @version 0.3.5
  */
 public class ResourceManager {
 
@@ -27,6 +27,8 @@ public class ResourceManager {
     public static String ALPHABET_STRING = null;
     public static String NUMBERS_STRING = null;
     public static String LEGAL_TEXT_STRING = null;
+
+    private static LogWriter writer = new LogWriter();
     // </editor-fold>
 
     public static String getDate() {
@@ -34,19 +36,14 @@ public class ResourceManager {
     }
 
     public static void start() {
-        if(logFile.exists())
+        if(logFile.exists()) {
             throw new IllegalArgumentException(String.format("\'%s\' log file already exists!", logFile.getPath()));
+        }
         else {
             try {
                 logFile.createNewFile();
-                try {
-                    LogWriter out = new LogWriter(logFile);
-                    out.timestamp(0, logFile.getPath() + " created.");
-                    out.timestamp(0, "ResourceManager");
-                    out.close();
-                } catch(IOException e) {
-                    System.err.println("An exception occurred during file writing.");
-                }
+                writer.setFile(logFile);
+                writer.writets(logFile.getPath() + " created.");
             } catch(IOException e) {
                 e.printStackTrace();
                 System.exit(1);
@@ -59,30 +56,33 @@ public class ResourceManager {
                 && testLogDirectory.exists()
         );
 
-        if(isFirstTime)
+        if(isFirstTime) {
             createConfigurations(true);
+        }
 
         System.out.println("Loading configurations...");
-
         try {
             ConfigurationFile configFile = new ConfigurationFile("jOmetry.config");
-            LogWriter out = new LogWriter(logFile);
-            out.timestamp(0, "ResourceManager");
-            out.timestamp(1, "Loading configurations...");
-            out.timestamp(1, "Loading Alphabet...");
+            writer.writets("ResourceManager");
+            writer.setTab(1);
+            writer.writets("Loading configurations...");
+
+            writer.writets("Loading Alphabet...");
             String alphabetPayload = configFile.getConfiguration("Alphabet");
-            out.timestamp(1, alphabetPayload);
+            writer.writets(alphabetPayload);
             ALPHABET_STRING = alphabetPayload;
-            out.timestamp(1, "Loading Numbers...");
+
+            writer.writets("Loading Numbers...");
             String numberPayload = configFile.getConfiguration("Numbers");
-            out.timestamp(1, numberPayload);
+            writer.writets(numberPayload);
             NUMBERS_STRING = numberPayload;
-            out.timestamp(1, "Loading Legal Text...");
+
+            writer.writets("Loading Legal Text...");
             String validPayload = configFile.getConfiguration("Legal Text");
-            out.timestamp(1, validPayload);
+            writer.writets(validPayload);
             LEGAL_TEXT_STRING = validPayload;
-            out.timestamp(1, "Done.");
-            out.close();
+
+            writer.writets("Done.");
         } catch(IOException e) {
             e.printStackTrace();
         }
