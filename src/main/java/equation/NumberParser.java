@@ -19,21 +19,20 @@ import static rsrc.ResourceManager.LEGAL_TEXT_STRING;
 public final class NumberParser {
 
     public enum AggregateType {
-        LEGAL_TEXT,
-        ILLEGAL_TEXT,
-        WHITE_SPACE,
+        LEGAL,
+        ILLEGAL,
+        EMPTY,
         NUMBER,
-        DECIMAL_POINT,
+        POINT,
     }
+    public static AggregateType determineAggregateType(char character) {
+        if(character == '.') {
+            return POINT;
+        }
+        if(String.valueOf(character).matches("\\s.")) {
+            return EMPTY;
+        }
 
-    /**
-     * Attempts to assign a given object an {@code AggregateType}. It will throw an {@code IllegalArgumentException} in
-     * the event one cannot be found.
-     *
-     * @param obj An object you want to assign an {@code AggregateType}
-     * @return The {@code AggregateType} of the passed object
-     */
-    public static AggregateType determineAggregateType(Object obj) {
         if(obj.equals('.') || obj.equals(".")) return DECIMAL_POINT;
         else if(isConstant(obj)) return NUMBER;
         else if(obj instanceof String || obj instanceof Character) {
@@ -80,7 +79,9 @@ public final class NumberParser {
             char currentCharacter = chars[i];
             AggregateType currentType = aggregateTypes.get(i);
 
-            if(currentType == WHITE_SPACE) continue;
+            if(currentType == EMPTY || currentType == ILLEGAL) {
+                continue;
+            }
 
             if(lastType == NUMBER || lastType == DECIMAL_POINT) {
                 if(currentType != NUMBER && currentType != DECIMAL_POINT) {
