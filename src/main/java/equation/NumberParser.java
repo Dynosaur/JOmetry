@@ -18,26 +18,6 @@ import static rsrc.ResourceManager.LEGAL_TEXT_STRING;
  */
 public final class NumberParser {
 
-    /**
-     * The {@code AggregateType} is a rough categorization of the different type of characters the parser may encounter.
-     * {@code LEGAL_TEXT} represents non-numerical values (Such as {@link symbol.operator.Operator} that are still
-     * legal in a mathematical sense. Characters that are legal are defined in {@code /resources/legal_text}.
-     *
-     * {@code ILLEGAL_TEXT} represents any non-legal text, such as an ampersand or percent symbol. These are not
-     * explicitly defined, rather all characters are assumed to be illegal until they are checked to be legal.
-     *
-     * {@code WHITE_SPACE} represents any white space characters, such as new lines, tabs, or spaces. The parser must
-     * keep track of these because it automatically removes all white space characters.
-     *
-     * {@code NUMBER} represents a numerical character 0-9. The parser marks these so it can combine numbers that
-     * are next to a number or a decimal point.
-     *
-     * {@code DECIMAL_POINT} represents a decimal point. The parser
-     *
-     * @author  Alejandro Doberenz
-     * @version 2.0
-     * @since   9/22/2019
-     */
     public enum AggregateType {
         LEGAL_TEXT,
         ILLEGAL_TEXT,
