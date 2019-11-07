@@ -5,123 +5,160 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.Date;
+import java.nio.file.FileAlreadyExistsException;
 
-/**
- * The Resource Manager will control configurations for the program. This includes reading and writing to configuration
- * files, providing data to the program, and deleting unnecessary files.
- *
- * @author  Alejandro Doberenz
- * @since   10/17/2019
- * @version 0.3.5
- */
 public class ResourceManager {
 
-    // <editor-fold desc="Variables">
-    private static boolean isFirstTime = true;
+    private File configFile;
+    private File mainLogDirectory;
+    private File testLogDirectory;
+    private File logFile;
 
-    private static File configFile = new File("jOmetry.config");
-    private static File mainLogDirectory = new File("src\\main\\resources\\logs");
-    private static File testLogDirectory = new File("src\\test\\resources\\logs");
-    private static File logFile = new File(String.format("src\\main\\resources\\logs\\%s.log", getDate()));
+    private LogWriter writer;
 
-    public static String ALPHABET_STRING = null;
-    public static String NUMBERS_STRING = null;
-    public static String LEGAL_TEXT_STRING = null;
+    private boolean hasReadConfigs = false;
 
-    private static LogWriter writer = new LogWriter();
-    // </editor-fold>
+    public String ALPHABET_STRING = null;
+    public String NUMBERS_STRING = null;
+    public String LEGAL_TEXT_STRING = null;
 
-    public static String getDate() {
-        return new java.util.Date().toString().replace(" ", "_").replace(":", ".");
-    }
-
-    public static void start() {
-        if(logFile.exists()) {
-            throw new IllegalArgumentException(String.format("\'%s\' log file already exists!", logFile.getPath()));
-        }
-        else {
-            try {
-                logFile.createNewFile();
-                writer.setFile(logFile);
-                writer.writets(logFile.getPath() + " created.");
-            } catch(IOException e) {
-                e.printStackTrace();
-                System.exit(1);
+    public ResourceManager() throws IOException {
+        File logDir = new File("logs");
+        if(!logDir.exists()) {
+            if(!logDir.mkdir()) {
+                throw new IOException("The log directory could not be made.");
             }
         }
 
-        isFirstTime = !(
-                configFile.exists()
-                && mainLogDirectory.exists()
-                && testLogDirectory.exists()
-        );
-
-        if(isFirstTime) {
-            createConfigurations(true);
+        File resourceManagerLogDir = new File("logs\\ResourceManager");
+        if(!resourceManagerLogDir.exists()) {
+            if(!resourceManagerLogDir.mkdir()) {
+                throw new IOException("The ResourceManagerLogs directory could not be made.");
+            }
         }
 
-        System.out.println("Loading configurations...");
-        try {
-            ConfigurationFile configFile = new ConfigurationFile("jOmetry.config");
-            writer.writets("ResourceManager");
+        String logName = new Date().toString().replace(" ", "_").replace(":", ".");
+        logFile = new File("logs\\ResourceManager\\" + logName + ".log");
+
+        if(logFile.exists())
+            throw new FileAlreadyExistsException(logFile.getPath());
+
+        if(!logFile.createNewFile())
+            throw new IOException("The log file could not be created.");
+
+        writer = new LogWriter(logFile);
+        writer.writets("Log file successfully created.");
+        writer.writets("Checking for config file at jOmetry/jOmetry.config...");
+        configFile = new File("jOmetry.config");
+        if(configFile.exists()) {
+            writer.writets("jOMetry/jOmetry.config exists.");
+        }
+        else {
+            writer.writets("jOMetry/jOmetry.config does not exist. Creating file...");
+            configFile.createNewFile();
+            writer.writets("Successful.");
+            writer.writets("Writing default configurations...");
+
+            writer.setFile(configFile);
+
+            writer.writeln("Numbers:");
             writer.setTab(1);
+            writer.writeln("0123456789");
+
+            writer.setTab(0);
+            writer.writeln("Alphabet:");
+            writer.setTab(1);
+            writer.writeln("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            writer.writeln("abcdefghijklmnopqrstuvwxyz");
+
+            writer.setTab(0);
+            writer.writeln("Legal Text:");
+            writer.setTab(1);
+            writer.writeln("\\Alphabet\\");
+            writer.writeln("+-*/=[]{}()");
+
+            writer.setFile(logFile);
+            writer.setTab(0);
+            writer.writets("Done.");
+        }
+
+        writer.writets("ResourceManager constructor complete.");
+        writer.writeln("");
+    }
+
+    public void readConfigurations() {
+        writer.setFile(logFile);
+        writer.setTab(0);
+        writer.writets("Loading configurations...");
+        writer.setTab(1);
+
+        try {
+            writer.writets("Attempting to create ConfigurationFile object...");
+            ConfigurationFile configFile = new ConfigurationFile("jOmetry.config");
+            writer.writets("Successful.");
             writer.writets("Loading configurations...");
+            writer.setTab(2);
 
             writer.writets("Loading Alphabet...");
+            writer.setTab(3);
             String alphabetPayload = configFile.getConfiguration("Alphabet");
-            writer.writets(alphabetPayload);
+            writer.writeln(alphabetPayload);
             ALPHABET_STRING = alphabetPayload;
+            writer.setTab(2);
 
             writer.writets("Loading Numbers...");
+            writer.setTab(3);
             String numberPayload = configFile.getConfiguration("Numbers");
-            writer.writets(numberPayload);
+            writer.writeln(numberPayload);
             NUMBERS_STRING = numberPayload;
+            writer.setTab(2);
 
             writer.writets("Loading Legal Text...");
+            writer.setTab(3);
             String validPayload = configFile.getConfiguration("Legal Text");
-            writer.writets(validPayload);
+            writer.writeln(validPayload);
             LEGAL_TEXT_STRING = validPayload;
+            writer.setTab(2);
 
+            writer.setTab(0);
             writer.writets("Done.");
+            hasReadConfigs = true;
         } catch(IOException e) {
             e.printStackTrace();
+            System.exit(1);
         }
 
     }
 
-    public static void createConfigurations(boolean verbose) {
-        if(verbose) System.out.println("Running first time setup...");
-        try {
-            if(configFile.createNewFile())
-                System.out.println("Created jOmetry/jOmetry.config");
-            if(mainLogDirectory.mkdirs())
-                System.out.println("Created src/main/resources/logs");
-            if(testLogDirectory.mkdirs())
-                System.out.println("Created src/test/resources/logs");
-        } catch(Exception e) {
-            e.printStackTrace();
-            System.exit(1);
+    public String getAlphabet() {
+        if(ALPHABET_STRING != null) {
+            return ALPHABET_STRING;
         }
-
-        System.out.println("Writing default configurations...");
-        try {
-            PrintWriter out = new PrintWriter(configFile);
-            out.println("Alphabet:");
-            out.println("\tABCDEFGHIJKLMNOPQRSTUVWXYZ");
-            out.println("\tabcdefghijklmnopqrstuvwxyz");
-            out.println("Legal Text:");
-            out.println("\t\\Alphabet\\");
-            out.println("\t+-*/=[]{}()");
-            out.close();
-        } catch(Exception e) {
-            e.printStackTrace();
-            System.exit(1);
+        else {
+            throw new IllegalStateException("ALPHABET_STRING was not initialized.");
         }
-
-        System.out.println("Done.\n");
     }
 
-    public static void purgeConfigurations(boolean verbose) {
+    public String getNumbers() {
+        if(NUMBERS_STRING != null) {
+            return NUMBERS_STRING;
+        }
+        else {
+            throw new IllegalStateException("NUMBERS_STRING was not initialized.");
+        }
+    }
+
+    public String getLegalText() {
+        if(LEGAL_TEXT_STRING != null) {
+            return LEGAL_TEXT_STRING;
+        }
+        else {
+            throw new IllegalStateException("LEGAL_TEXT_STRING was not initialized.");
+        }
+    }
+
+    public  void purgeConfigurations(boolean verbose) {
         if(verbose) {
             System.out.println("\n\t=======================");
             System.out.println("\t\t\tPURGING ");
@@ -136,7 +173,7 @@ public class ResourceManager {
         }
     }
 
-    private static void printDelete(File fileToDelete, boolean verbose) {
+    private void printDelete(File fileToDelete, boolean verbose) {
         if(verbose)
             System.out.print(fileToDelete.getPath() + " deleted: [ ");
         if(fileToDelete.isDirectory()) {
@@ -160,7 +197,7 @@ public class ResourceManager {
             System.out.println(" ]");
     }
 
-    private static boolean recursiveDelete(File fileToDelete) {
+    private boolean recursiveDelete(File fileToDelete) {
         if(fileToDelete.isDirectory()) {
             ArrayList<File> fileArray = new ArrayList<>(java.util.Arrays.asList(fileToDelete.listFiles()));
             for(File file : fileArray) recursiveDelete(file);
@@ -168,7 +205,7 @@ public class ResourceManager {
         return fileToDelete.delete();
     }
 
-    public static void clean() {
+    public void clean() {
         Scanner in = new Scanner(System.in);
         System.out.println();
         while(true) {
