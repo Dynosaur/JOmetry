@@ -1,8 +1,9 @@
 import equation.NumberParser;
 import rsrc.ResourceManager;
 
+import java.io.IOException;
+
 import static equation.NumberParser.aggregateNumbers;
-import static equation.SymbolGenerator.generateSymbols;
 
 /**
  * Runs the JOmetry program.
@@ -13,9 +14,9 @@ import static equation.SymbolGenerator.generateSymbols;
  */
 public class JOmetry {
 
-    public static void main(String[] args) {
-        ResourceManager.start();
-        System.out.println(NumberParser.aggregateNumbers("10 ..1 # + y = x"));
+    public static void main(String[] args) throws IOException {
+        ResourceManager rm = new ResourceManager();
+        System.out.println(NumberParser.aggregateNumbers("5 + 1092389a1.2x + 0.382"));
     }
 
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import static equation.NumberParser.AggregateType.*;
 import static symbol.constant.Constant.isConstant;
-import static rsrc.ResourceManager.LEGAL_TEXT_STRING;
 
 /**
  * The {@code NumberParser} class's purpose is to merge numbers and decimal points within a {@code String}, and
@@ -19,20 +18,13 @@ import static rsrc.ResourceManager.LEGAL_TEXT_STRING;
 public final class NumberParser {
 
     public enum AggregateType {
-        LEGAL,
-        ILLEGAL,
-        EMPTY,
+        LEGAL_TEXT,
+        ILLEGAL_TEXT,
+        WHITE_SPACE,
         NUMBER,
-        POINT,
+        DECIMAL_POINT,
     }
-    public static AggregateType determineAggregateType(char character) {
-        if(character == '.') {
-            return POINT;
-        }
-        if(String.valueOf(character).matches("\\s.")) {
-            return EMPTY;
-        }
-
+    public static AggregateType determineAggregateType(Object obj) {
         if(obj.equals('.') || obj.equals(".")) return DECIMAL_POINT;
         else if(isConstant(obj)) return NUMBER;
         else if(obj instanceof String || obj instanceof Character) {
@@ -40,7 +32,7 @@ public final class NumberParser {
                 if(((String) obj).length() != 1) return ILLEGAL_TEXT;
                 else obj = ((String) obj).toCharArray()[0];
             }
-            if(LEGAL_TEXT_STRING.contains(String.valueOf(obj))) return LEGAL_TEXT;
+            if("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz[]()+-*/".contains(String.valueOf(obj))) return LEGAL_TEXT;
             else if(Character.isWhitespace((char) obj)) return WHITE_SPACE;
             else return ILLEGAL_TEXT;
         } throw new IllegalArgumentException(obj + " could not be assigned an AggregateType.");
@@ -79,7 +71,7 @@ public final class NumberParser {
             char currentCharacter = chars[i];
             AggregateType currentType = aggregateTypes.get(i);
 
-            if(currentType == EMPTY || currentType == ILLEGAL) {
+            if(currentType == WHITE_SPACE || currentType == ILLEGAL_TEXT) {
                 continue;
             }
 
