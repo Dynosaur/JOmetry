@@ -1,10 +1,15 @@
 package symbol.variable;
 
+import rsrc.ResourceManager;
 import symbol.Symbol;
 
-import static rsrc.ResourceManager.ALPHABET_STRING;
-
 public class Variable extends Symbol {
+
+    private static ResourceManager resourceManager;
+
+    public static void setResourceManager(ResourceManager manager) {
+        resourceManager = manager;
+    }
 
     public static boolean isVariable(Object obj) {
         if(obj instanceof Variable) return true;
@@ -13,7 +18,7 @@ public class Variable extends Symbol {
                 if(((String) obj).length() > 1) return false;
                 else obj = ((String) obj).toCharArray()[0];
             }
-            return ALPHABET_STRING.contains(String.valueOf(obj));
+            return resourceManager.getAlphabet().contains(String.valueOf(obj));
         } else return false;
     }
 
