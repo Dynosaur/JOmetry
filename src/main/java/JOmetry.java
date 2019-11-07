@@ -1,21 +1,20 @@
-import equation.NumberParser;
 import rsrc.ResourceManager;
-
-import static equation.NumberParser.aggregateNumbers;
-import static equation.SymbolGenerator.generateSymbols;
+import equation.NumberParser;
 
 /**
  * Runs the JOmetry program.
  *
  * @author  Alejandro Doberenz
- * @version 1.0
+ * @version 1.1
  * @since   9/12/2019
  */
 public class JOmetry {
 
-    public static void main(String[] args) {
-        ResourceManager.start();
-        System.out.println(NumberParser.aggregateNumbers("10 ..1 # + y = x"));
+    public static void main(String[] args) throws java.io.IOException {
+        ResourceManager resourceManager = new ResourceManager();
+        resourceManager.readConfigurations();
+        NumberParser parser = new NumberParser(resourceManager);
+        System.out.println(parser.aggregateNumbers("5 + 1092389a1.2x + 0.382"));
     }
 
 }
