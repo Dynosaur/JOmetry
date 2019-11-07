@@ -7,11 +7,8 @@ import symbol.constant.Constant;
 import symbol.operator.Operator;
 import symbol.variable.Variable;
 
-import static equation.TermAggregator.SymbolType.*;
-import static equation.SymbolGenerator.generateSymbols;
-
 public class TermAggregator {
-
+/*
     public enum SymbolType {
         CONSTANT,
         OPERATOR,
@@ -35,5 +32,5 @@ public class TermAggregator {
             System.out.println(determineSymbolType(symbols.get(i)));
         }
     }
-
+*/
 }

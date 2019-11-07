@@ -7,7 +7,7 @@ import symbol.Symbol;
 import static util.Symbols.createSymbol;
 
 public class SymbolGenerator {
-
+/*
     public static ArrayList<Symbol> generateSymbols(ArrayList<String> strings) {
         ArrayList<Symbol> symbols = new ArrayList<>(0);
         for(String string : strings)
@@ -18,5 +18,6 @@ public class SymbolGenerator {
     public static ArrayList<Symbol> generateSymbols(String statement) {
         return generateSymbols(NumberParser.aggregateNumbers(statement));
     }
+    */
 
 }
