@@ -2,6 +2,8 @@ package equation;
 
 import rsrc.ResourceManager;
 import symbol.constant.Constant;
+import symbol.Symbol;
+import util.Symbols;
 
 import java.util.ArrayList;
 
@@ -19,8 +21,8 @@ public final class NumberParser {
 
     private ResourceManager resourceManager;
 
-    public NumberParser(ResourceManager rsrc) {
-        resourceManager = rsrc;
+    public NumberParser(ResourceManager manager) {
+        resourceManager = manager;
     }
 
     public boolean isLegalCharacter(char character) {
@@ -89,6 +91,18 @@ public final class NumberParser {
             }
         }
         return builtStrings;
+    }
+
+    public ArrayList<Symbol> generateSymbols(ArrayList<String> strings) {
+        ArrayList<Symbol> symbols = new ArrayList<>(0);
+        for(String string : strings) {
+            symbols.add(Symbols.createSymbol(string));
+        }
+        return symbols;
+    }
+
+    public ArrayList<Symbol> generateSymbols(String statement) {
+        return generateSymbols(aggregateNumbers(statement));
     }
 
 }
