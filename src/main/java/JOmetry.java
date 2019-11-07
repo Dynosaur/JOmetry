@@ -1,5 +1,8 @@
 import rsrc.ResourceManager;
 import equation.NumberParser;
+import symbol.variable.Variable;
+
+import java.util.Scanner;
 
 /**
  * Runs the JOmetry program.
@@ -13,8 +16,14 @@ public class JOmetry {
     public static void main(String[] args) throws java.io.IOException {
         ResourceManager resourceManager = new ResourceManager();
         resourceManager.readConfigurations();
+        Variable.setResourceManager(resourceManager);
         NumberParser parser = new NumberParser(resourceManager);
-        System.out.println(parser.aggregateNumbers("5 + 1092389a1.2x + 0.382"));
+        Scanner in = new Scanner(System.in);
+        while(true) {
+            System.out.print("Enter an equation: ");
+            String input = in.nextLine();
+            System.out.println(parser.generateSymbols(input));
+        }
     }
 
 }
