@@ -50,7 +50,7 @@ public class LogWriter  {
             for(int i = 0; i < tabLevel; i++) {
                 currentWriter.write("\t");
             }
-            currentWriter.write(message + "\n");
+            currentWriter.write(message + "\r\n");
             currentWriter.flush();
             currentWriter.close();
             openConnections = false;

@@ -11,8 +11,6 @@ import java.nio.file.FileAlreadyExistsException;
 public class ResourceManager {
 
     private File configFile;
-    private File mainLogDirectory;
-    private File testLogDirectory;
     private File logFile;
 
     private LogWriter writer;
@@ -165,8 +163,6 @@ public class ResourceManager {
             System.out.println("Purging configuration and log files...");
         }
         printDelete(configFile, verbose);
-        printDelete(mainLogDirectory, verbose);
-        printDelete(testLogDirectory, verbose);
         if(verbose) {
             System.out.println("Done.");
             System.out.println("\t=======================");
